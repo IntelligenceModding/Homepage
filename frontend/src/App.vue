@@ -70,7 +70,7 @@ const footerNav = {
   <Toast></Toast>
   <div v-if="showLayout">
     <div class="flex flex-col min-h-screen">
-    <div class="sticky top-0 dark:bg-slate-800 bg-white z-20">
+    <div class="sticky top-0 bg-slate-800 z-20">
       <nav class="mx-auto flex max-w-7xl items-center justify-between p-3 lg:px-8" aria-label="Global">
         <div class="flex lg:flex-1">
           <router-link to="/" class="-m-1 p-1 ">
@@ -107,10 +107,10 @@ const footerNav = {
         </div>
       </nav>
     </div>
-    <div class="flex-grow dark:bg-slate-800 bg-white">
+    <div class="flex-grow">
       <router-view></router-view>
     </div>
-    <footer class="bg-white dark:bg-slate-800 border-t border-slate-600">
+    <footer class="bg-slate-800 border-t border-slate-600">
       <div class="mx-auto max-w-7xl overflow-hidden px-6 py-24 sm:py-8 lg:px-8">
         <nav class="mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
           <router-link v-for="item in footerNav.main" :to=item.href

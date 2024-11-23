@@ -6,62 +6,22 @@ import App from "./App.vue";
 import ToastService from 'primevue/toastservice';
 
 import "primeicons/primeicons.css";
-import Aura from "@primevue/themes/aura";
 import {createRouter, createWebHistory} from "vue-router";
 import {requestBackend} from "@/scripts/data";
 import {useUserStore} from "@/stores/user";
 import Login from "@/views/Login.vue";
 import {createPinia} from "pinia";
-import {definePreset} from "@primevue/themes";
 import Users from "@/views/Users.vue";
 import MyProfile from "@/views/MyProfile.vue";
 import Homepage from "@/views/Homepage.vue";
+import {IntelligencePreset} from "@/theme";
 
 const pinia = createPinia()
 const app = createApp(App);
 
-const MyPreset = definePreset(Aura, {
-  semantic: {
-    primary: {
-      50: '{violet.50}',
-      100: '{violet.100}',
-      200: '{violet.200}',
-      300: '{violet.300}',
-      400: '{violet.400}',
-      500: '{violet.500}',
-      600: '{violet.600}',
-      700: '{violet.700}',
-      800: '{violet.800}',
-      900: '{violet.900}',
-      950: '{violet.950}'
-    },
-    colorScheme: {
-      light: {
-        formField: {
-          background: '{surface.100}',
-          disabledBackground: '{surface.200}',
-        }
-      },
-      dark: {
-        formField: {
-          background: '{surface.800}',
-          disabledBackground: '{surface.200}',
-        },
-        content: {
-          background: '{surface.900}',
-          hoverBackground: '{surface.800}',
-          borderColor: '{surface.700}',
-          color: '{text.color}',
-          hoverColor: '{text.hover.color}'
-        },
-      }
-    }
-  }
-});
-
 app.use(PrimeVue, {
   theme: {
-    preset: MyPreset,
+    preset: IntelligencePreset,
     options: {
       darkModeSelector: '.idark',
     },
