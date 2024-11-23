@@ -1,0 +1,21 @@
+[package]
+name = "intelligence"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+opt-level = 3
+
+[dependencies]
+actix-web = "4.9.0"
+futures-util = "0.3.31"
+env_logger = "0.11.5"
+async-trait = "0.1.83"
+bytes = "1.8.0"
+tokio = { version = "1.41.0", features = ["fs", "rt-multi-thread"] }
+surrealdb = "2.1.0"
+serde = { version = "1.0.214", features = ["derive"] }
+jsonwebtoken = "9.3.0"
+actix-web-httpauth = "0.8.2"
+dotenv = "0.15.0"
+log = "0.4.22"
