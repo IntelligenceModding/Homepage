@@ -1,7 +1,11 @@
 [package]
-name = "intelligence"
+name = "intelligence-homepage"
+description = "Backend for the Homepage of the intelligence modding team"
+authors = ["srendi"]
+keywords = ["homepage", "blog", "backend", "surrealdb", "s3"]
 version = "0.1.0"
 edition = "2021"
+rust-version = "1.82.0"
 
 [profile.release]
 opt-level = 3
@@ -12,9 +16,9 @@ futures-util = "0.3.31"
 env_logger = "0.11.5"
 async-trait = "0.1.83"
 bytes = "1.8.0"
-tokio = { version = "1.41.0", features = ["fs", "rt-multi-thread"] }
+tokio = { version = "1.41.1", features = ["fs", "rt-multi-thread"] }
 surrealdb = "2.1.0"
-serde = { version = "1.0.214", features = ["derive"] }
+serde = { version = "1.0.215", features = ["derive"] }
 jsonwebtoken = "9.3.0"
 actix-web-httpauth = "0.8.2"
 dotenv = "0.15.0"
