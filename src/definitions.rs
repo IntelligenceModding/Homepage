@@ -1,7 +1,7 @@
 use std::cmp::PartialEq;
 use std::fmt;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
-use surrealdb::sql::{Datetime, Id};
+use surrealdb::sql::Id;
 
 impl fmt::Display for IntelliThing {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -71,7 +71,7 @@ fn serialize_option_record_id<S>(record_id: &Option<IntelliThing>, serializer: S
 where
     S: Serializer,
 {
-    match (record_id) {
+    match record_id {
         None => {
             Ok(serializer.serialize_str("")?) 
         }
