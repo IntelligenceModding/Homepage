@@ -11,7 +11,7 @@ use jsonwebtoken::{Algorithm, DecodingKey, EncodingKey};
 use crate::auth::auth_service;
 
 mod api { // Declare the 'api' module
-
+    pub mod post;
     pub mod users;
 }
 
@@ -64,6 +64,7 @@ async fn main() -> Result<(), Error> {
 
             .service(auth_service())
             .service(api::users::user_service())
+            .service(api::post::blog_service())
     })
         .workers(2)
         .bind("0.0.0.0:6969")?

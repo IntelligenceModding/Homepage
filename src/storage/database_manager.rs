@@ -4,7 +4,7 @@ use surrealdb::engine::remote::ws::{Client, Ws};
 use surrealdb::opt::auth::{Root};
 use surrealdb::{Response, Surreal};
 use log::info;
-use crate::definitions::{BodyUser, User};
+use crate::definitions::{BodyPost, BodyUser, IntelliThing, Post, User};
 
 #[derive(Clone)]
 pub struct DatabaseManager {
@@ -58,11 +58,6 @@ impl DatabaseManager {
         Ok(users)
     }
 
-    pub async fn delete_user(&self, id: String) -> surrealdb::Result<Option<User>> {
-        let deleted: Option<User> = self.database.delete(("user", id)).await?;
-        Ok(deleted)
-    }
-
     pub async fn fetch_user(&self, name_or_email: String) -> surrealdb::Result<Option<User>> {
         let user: Vec<User> = self.database
             .query("SELECT * FROM user WHERE name = $name OR email = $name OR id = type::thing(\"user\", $name) LIMIT 1")
@@ -73,10 +68,46 @@ impl DatabaseManager {
         Ok(user.into_iter().nth(0))
     }
 
+    pub async fn fetch_posts(&self) -> surrealdb::Result<Vec<Post>> {
+        let posts: Vec<Post> = self.database
+            .query("SELECT * FROM post ORDER BY posted ASC")
+            .await?
+            .take(0)?;
+
+        Ok(posts)
+    }
+
+    pub async fn fetch_post(&self, title_or_id: String) -> surrealdb::Result<Option<Post>> {
+        let post: Vec<Post> = self.database
+            .query("SELECT * FROM post WHERE title = $name OR id = type::thing(\"post\", $name) LIMIT 1")
+            .bind(("name", title_or_id))
+            .await?
+            .take(0)?;
+
+        Ok(post.into_iter().nth(0))
+    }
+
+    pub async fn delete_user(&self, id: String) -> surrealdb::Result<Option<User>> {
+        let deleted: Option<User> = self.database.delete(("user", id)).await?;
+        Ok(deleted)
+    }
+
+    pub async fn delete_post(&self, id: String) -> surrealdb::Result<Option<Post>> {
+        let deleted: Option<Post> = self.database.delete(("post", id)).await?;
+        Ok(deleted)
+    }
+
     pub async fn add_user(&self, user: BodyUser) -> surrealdb::Result<Vec<User>> {
         self.database
             .insert("user")
             .content(user)
+            .await
+    }
+
+    pub async fn add_post(&self, post: BodyPost) -> surrealdb::Result<Vec<Post>> {
+        self.database
+            .insert("post")
+            .content(post)
             .await
     }
 

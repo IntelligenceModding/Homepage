@@ -7,7 +7,7 @@ use actix_web::web::{Data, Json};
 use actix_web_httpauth::extractors::bearer::BearerAuth;
 use jsonwebtoken::{encode, decode, Header as JwtHeader, Algorithm, Validation, EncodingKey, DecodingKey, errors::Result as JwtResult};
 use serde::{Deserialize, Serialize};
-use crate::definitions::User;
+use crate::definitions::{User};
 use crate::storage::database_manager::DatabaseManager;
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -111,7 +111,7 @@ async fn auth_login(
                     if user.validate_password(login_credentials.password.clone()) {
                         let iat = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).unwrap().as_secs() as usize;
                         let claims = Claims {
-                            exp: iat + (24 * 60 * 60),
+                            exp: iat + (30 * 24 * 60 * 60),
                             iat,
                             iss: "intelligence".to_string(),
                             sub: user.id.to_string(),

@@ -1,7 +1,13 @@
 use std::cmp::PartialEq;
 use std::fmt;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use surrealdb::Datetime;
 use surrealdb::sql::Id;
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct IntelliThing {
+    pub(crate) id: Id,
+}
 
 impl fmt::Display for IntelliThing {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -9,9 +15,10 @@ impl fmt::Display for IntelliThing {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct IntelliThing {
-    pub(crate) id: Id,
+impl PartialEq for IntelliThing {
+    fn eq(&self, other: &Self) -> bool {
+        other.id == self.id
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -27,10 +34,16 @@ pub struct User {
     pub(crate) lastname: Option<String>,
 }
 
-impl PartialEq for IntelliThing {
-    fn eq(&self, other: &Self) -> bool {
-        other.id == self.id
-    }
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Post {
+    #[serde(serialize_with = "serialize_record_id")]
+    pub(crate) id: IntelliThing,
+    #[serde(serialize_with = "serialize_record_id")]
+    pub(crate) author: IntelliThing,
+    pub(crate) likes: i32,
+    pub(crate) views: i32,
+    pub(crate) title: String,
+    pub(crate) posted: Datetime,
 }
 
 impl User {
@@ -59,6 +72,16 @@ pub struct BodyUser {
     pub(crate) lastname: Option<String>,
 }
 
+// Used by the http endpoint to allow patching the post
+#[derive(Serialize, Deserialize, Debug)]
+pub struct BodyPost {
+    #[serde(serialize_with = "serialize_option_record_id", deserialize_with = "deserialize_record_id")]
+    pub(crate) author: Option<IntelliThing>,
+    pub(crate) likes: Option<i32>,
+    pub(crate) views: Option<i32>,
+    pub(crate) title: Option<String>,
+    pub(crate) posted: Option<Datetime>,
+}
 
 fn serialize_record_id<S>(record_id: &IntelliThing, serializer: S) -> Result<S::Ok, S::Error>
     where
