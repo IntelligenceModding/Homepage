@@ -3,7 +3,7 @@ use actix_web::{Error, get, HttpResponse, patch, put, Scope, web, post, delete};
 use actix_web::web::Json;
 use futures_util::StreamExt;
 use log::error;
-use crate::definitions::{BodyUser, User};
+use crate::definitions::{ User, UserData};
 use crate::storage::database_manager::DatabaseManager;
 use crate::storage::storage_manager::StorageManager;
 
@@ -93,7 +93,7 @@ async fn user_delete(
 #[post("")]
 async fn user_post(
     user: User,
-    body: Json<BodyUser>,
+    body: Json<UserData>,
     database_manager: web::Data<DatabaseManager>) -> Result<HttpResponse, Error> {
 
     if !user.admin {
@@ -106,7 +106,7 @@ async fn user_post(
         Ok(_) => {
         }
         Err(err) => {
-            error!("Could not update user {err}");
+            error!("Could not create user {err}");
             return Ok(HttpResponse::InternalServerError().finish())
         }
     }
@@ -145,9 +145,10 @@ async fn user_exists(
 #[patch("/{userId}")]
 async fn user_patch(
     user: User,
-    body: Json<BodyUser>,
+    body: Json<UserData>,
     path: web::Path<String>,
-    database_manager: web::Data<DatabaseManager>) -> Result<HttpResponse, Error> {
+    database_manager: web::Data<DatabaseManager>
+) -> Result<HttpResponse, Error> {
     let user_id = path.into_inner();
 
     if !user.admin && !user.compare(&user_id) {
@@ -167,7 +168,6 @@ async fn user_patch(
         }
         Some(mut modified_user) => {
             // Apply partial updates based on the fields provided in the request body
-            // Can we make this a bit more clean? Especially if we have more fields in the future, this is ass to maintain
             if let Some(name) = body.name.clone() {
                 modified_user.name = name;
             }
@@ -188,10 +188,17 @@ async fn user_patch(
             }
 
             match database_manager.update_user(&modified_user).await {
-                Ok(_) => {
-                    // We use the body here since I do not want to send the password back in the response
-                    //if it was not included in the request.
-                    Ok(HttpResponse::Ok().json(body))
+                Ok(updated_user) => {
+                    // Create a new UserData instance without the password
+                    let response_data = UserData {
+                        name: updated_user.as_ref().map(|u| u.name.clone()),
+                        admin: updated_user.as_ref().map(|u| u.admin.clone()),
+                        email: updated_user.as_ref().map(|u| u.email.clone()),
+                        password: None,
+                        firstname: updated_user.as_ref().and_then(|u| u.firstname.clone()),
+                        lastname: updated_user.as_ref().and_then(|u| u.lastname.clone()),
+                    };
+                    Ok(HttpResponse::Ok().json(response_data))
                 }
                 Err(err) => {
                     error!("Couldn't patch user {}", err);
@@ -201,6 +208,7 @@ async fn user_patch(
         }
     }
 }
+
 
 #[put("/{userId}/image")]
 async fn user_picture_put(

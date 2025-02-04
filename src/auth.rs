@@ -6,6 +6,7 @@ use actix_web::dev::Payload;
 use actix_web::web::{Data, Json};
 use actix_web_httpauth::extractors::bearer::BearerAuth;
 use jsonwebtoken::{encode, decode, Header as JwtHeader, Algorithm, Validation, EncodingKey, DecodingKey, errors::Result as JwtResult};
+use log::error;
 use serde::{Deserialize, Serialize};
 use crate::definitions::{User};
 use crate::storage::database_manager::DatabaseManager;
@@ -68,7 +69,10 @@ impl FromRequest for User {
                                         None => Err(error::ErrorUnauthorized("User not found"))
                                     }
                                 },
-                                Err(_) => Err(error::ErrorUnauthorized("Failed to fetch user from database"))
+                                Err(err) => {
+                                    error!("{}", err);
+                                    Err(error::ErrorUnauthorized("Failed to fetch user from database"))
+                                }
                             }
                         },
                         Err(_) => Err(error::ErrorUnauthorized("Invalid token"))
@@ -128,7 +132,10 @@ async fn auth_login(
                 None => Err(error::ErrorUnauthorized("Invalid credentials"))
             }
         },
-        Err(_) => Err(error::ErrorInternalServerError("Failed to fetch user from database"))
+        Err(err) => {
+            error!("{}", err);
+            Err(error::ErrorUnauthorized("Failed to fetch user from database"))
+        }
     }
 }
 

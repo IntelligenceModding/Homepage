@@ -4,7 +4,7 @@ use surrealdb::engine::remote::ws::{Client, Ws};
 use surrealdb::opt::auth::{Root};
 use surrealdb::{Response, Surreal};
 use log::info;
-use crate::definitions::{BodyPost, BodyUser, IntelliThing, Post, User};
+use crate::definitions::{IntelliThing, Post, PostData, User, UserData};
 
 #[derive(Clone)]
 pub struct DatabaseManager {
@@ -97,14 +97,16 @@ impl DatabaseManager {
         Ok(deleted)
     }
 
-    pub async fn add_user(&self, user: BodyUser) -> surrealdb::Result<Vec<User>> {
+    pub async fn add_user(&self, user: UserData) -> surrealdb::Result<Vec<User>> {
         self.database
             .insert("user")
             .content(user)
             .await
     }
 
-    pub async fn add_post(&self, post: BodyPost) -> surrealdb::Result<Vec<Post>> {
+    pub async fn add_post(&self, post_data: PostData) -> surrealdb::Result<Vec<Post>> {
+        let post = post_data.to_surreal()?;
+
         self.database
             .insert("post")
             .content(post)
@@ -114,8 +116,7 @@ impl DatabaseManager {
     pub async fn update_user(&self, user: &User) -> surrealdb::Result<Option<User>> {
         self.database
             .update(("user", user.id.to_string()))
-            .merge(BodyUser {
-                id: Some(user.id.clone()),
+            .merge(UserData {
                 name: Some(user.name.clone()),
                 admin: Some(user.admin),
                 email: Some(user.email.clone()),
