@@ -8,6 +8,7 @@ use actix_web_httpauth::extractors::bearer::BearerAuth;
 use jsonwebtoken::{encode, decode, Header as JwtHeader, Algorithm, Validation, EncodingKey, DecodingKey, errors::Result as JwtResult};
 use log::error;
 use serde::{Deserialize, Serialize};
+use surrealdb::types::ToSql;
 use crate::definitions::{User};
 use crate::storage::database_manager::DatabaseManager;
 
@@ -118,7 +119,7 @@ async fn auth_login(
                             exp: iat + (30 * 24 * 60 * 60),
                             iat,
                             iss: "intelligence".to_string(),
-                            sub: user.id.to_string(),
+                            sub: user.id.key.to_sql(),
                         };
 
                         match auth_manager.create_token(&claims) {

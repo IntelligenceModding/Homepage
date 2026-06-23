@@ -2,9 +2,9 @@ use std::sync::Arc;
 use serde::{Deserialize, Serialize};
 use surrealdb::engine::remote::ws::{Client, Ws};
 use surrealdb::opt::auth::{Root};
-use surrealdb::{Response, Surreal};
+use surrealdb::{IndexedResults, Surreal};
 use log::info;
-use crate::definitions::{IntelliThing, Post, PostData, User, UserData};
+use crate::definitions::{Post, PostData, User, UserData};
 
 #[derive(Clone)]
 pub struct DatabaseManager {
@@ -29,8 +29,8 @@ impl DatabaseManager {
 
         //TODO support more than just root auth
         db.signin(Root {
-            username: &db_name,
-            password: &db_pass,
+            username: db_name,
+            password: db_pass,
         }).await?;
 
         info!("Connecting successful!");
@@ -43,10 +43,6 @@ impl DatabaseManager {
 
     pub fn get_database(&self) -> Arc<Surreal<Client>> {
         self.database.clone()
-    }
-
-    pub async fn query(&self, query: String, bindings: impl Serialize + 'static) -> surrealdb::Result<Response> {
-        self.database.query(query).bind(bindings).await
     }
 
     pub async fn fetch_users(&self) -> surrealdb::Result<Vec<User>> {
@@ -105,17 +101,15 @@ impl DatabaseManager {
     }
 
     pub async fn add_post(&self, post_data: PostData) -> surrealdb::Result<Vec<Post>> {
-        let post = post_data.to_surreal()?;
-
         self.database
             .insert("post")
-            .content(post)
+            .content(post_data)
             .await
     }
 
     pub async fn update_user(&self, user: &User) -> surrealdb::Result<Option<User>> {
         self.database
-            .update(("user", user.id.to_string()))
+            .update(("user", user.id.key.clone()))
             .merge(UserData {
                 name: Some(user.name.clone()),
                 admin: Some(user.admin),

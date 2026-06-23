@@ -12,15 +12,15 @@ rust-version = "1.82.0"
 opt-level = 3
 
 [dependencies]
-actix-web = "4.9.0"
-futures-util = "0.3.31"
-env_logger = "0.11.5"
-async-trait = "0.1.83"
-bytes = "1.8.0"
-tokio = { version = "1.41.1", features = ["fs", "rt-multi-thread"] }
-surrealdb = "2.1.0"
-serde = { version = "1.0.215", features = ["derive"] }
-jsonwebtoken = "9.3.0"
+actix-web = "4.14.0"
+futures-util = "0.3.32"
+env_logger = "0.11.10"
+async-trait = "0.1.89"
+bytes = "1.12.0"
+tokio = { version = "1.52.3", features = ["fs", "rt-multi-thread"] }
+surrealdb = "3.1.5"
+serde = { version = "1.0.228", features = ["derive"] }
+jsonwebtoken = "10.4.0"
 actix-web-httpauth = "0.8.2"
 dotenv = "0.15.0"
-log = "0.4.22"
+log = "0.4.33"
