@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize, Serializer};
+use serde::{Deserialize, Serialize};
 use surrealdb::types::{Datetime, RecordId, RecordIdKey, SurrealValue};
 
 #[derive(Serialize, Deserialize, Debug, Clone, SurrealValue)]

@@ -2,7 +2,7 @@ use std::sync::Arc;
 use serde::{Deserialize, Serialize};
 use surrealdb::engine::remote::ws::{Client, Ws};
 use surrealdb::opt::auth::{Root};
-use surrealdb::{IndexedResults, Surreal};
+use surrealdb::Surreal;
 use log::info;
 use crate::definitions::{Post, PostData, User, UserData};
 

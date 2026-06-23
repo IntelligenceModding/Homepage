@@ -1,11 +1,8 @@
 use crate::definitions::{Post, PostData, User};
 use crate::storage::database_manager::DatabaseManager;
-use crate::storage::storage_manager::StorageManager;
 use actix_web::web::Json;
-use actix_web::{delete, get, patch, post, put, web, Error, HttpResponse, Scope};
-use futures_util::StreamExt;
+use actix_web::{delete, get, post, web, Error, HttpResponse, Scope};
 use log::error;
-use std::path::PathBuf;
 
 pub fn blog_service() -> Scope {
     web::scope("/api/v1/posts")

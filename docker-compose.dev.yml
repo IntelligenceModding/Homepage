@@ -2,22 +2,21 @@ version: '3'
 
 services:
   volume_ownership:
-    image: alpine:3.20.1
+    image: alpine:3.24.1
     volumes:
       - surrealdb_data:/data
     command: chown -R 65532 /data
 
   surrealdb:
-    image: surrealdb/surrealdb:v3.1.4
+    image: surrealdb/surrealdb:v3.1.5
     entrypoint:
       - /surreal
       - start
-      - --auth
-      - --user
+      - --username
       - intelligence
-      - --pass
+      - --password
       - intelligence
-      - file:/data/intelligence.db
+      - surrealkv:/data/intelligence.db
     ports:
       - 8000:8000
     volumes:
