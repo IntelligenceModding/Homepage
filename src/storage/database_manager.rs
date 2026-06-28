@@ -56,7 +56,7 @@ impl DatabaseManager {
 
     pub async fn fetch_user(&self, name_or_email: String) -> surrealdb::Result<Option<User>> {
         let user: Vec<User> = self.database
-            .query("SELECT * FROM user WHERE name = $name OR email = $name OR id = type::thing(\"user\", $name) LIMIT 1")
+            .query("SELECT * FROM user WHERE name = $name OR email = $name OR id = type::record(\"user\", $name) LIMIT 1")
             .bind(("name", name_or_email))
             .await?
             .take(0)?;
@@ -75,7 +75,7 @@ impl DatabaseManager {
 
     pub async fn fetch_post(&self, title_or_id: String) -> surrealdb::Result<Option<Post>> {
         let post: Vec<Post> = self.database
-            .query("SELECT * FROM post WHERE title = $name OR id = type::thing(\"post\", $name) LIMIT 1")
+            .query("SELECT * FROM post WHERE title = $name OR id = type::record(\"post\", $name) LIMIT 1")
             .bind(("name", title_or_id))
             .await?
             .take(0)?;

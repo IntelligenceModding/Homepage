@@ -1401,12 +1401,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "endian-type"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "869b0adbda23651a9c5c0c3d270aac9fcb52e8622a8f2b17e57802d7791962f2"
-
-[[package]]
 name = "env_filter"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2823,15 +2817,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "650eef8c711430f1a879fdd01d4745a7deea475becfb90269c06775983bbf086"
 
 [[package]]
-name = "nibble_vec"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "77a5d83df9f36fe23f0c3648c6bbb8b0298bb5f1939c8f2704431371f4b84d43"
-dependencies = [
- "smallvec",
-]
-
-[[package]]
 name = "noisy_float"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3516,17 +3501,6 @@ name = "radium"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dc33ff2d4973d518d823d61aa239014831e521c75da58e3df4840d3f47749d09"
-
-[[package]]
-name = "radix_trie"
-version = "0.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3b4431027dcd37fc2a73ef740b5f233aa805897935b8bce0195e41bbf9a3289a"
-dependencies = [
- "endian-type",
- "nibble_vec",
- "serde",
-]
 
 [[package]]
 name = "rand"
@@ -4449,9 +4423,9 @@ checksum = "13c2bddecc57b384dee18652358fb23172facb8a2c51ccc10d74c157bdea3292"
 
 [[package]]
 name = "surrealdb"
-version = "3.1.5"
+version = "3.2.0-beta.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "81ee3110fe3ab8172eb8c135c96ed2d57c7470cdf1ad732d176db95a92c9faab"
+checksum = "9623d3026857cb44619b41dbba39a29a8feb77b0fb82fde5f95414e866713dc1"
 dependencies = [
  "anyhow",
  "async-channel",
@@ -4487,9 +4461,9 @@ dependencies = [
 
 [[package]]
 name = "surrealdb-collections"
-version = "3.1.5"
+version = "3.2.0-beta.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "069e0c90dad71cf8f17475f75118a56ad3047f2f46fac24643e562b415b3f11a"
+checksum = "a7e49cb0246e2bc005175936d40e1f83dcbc072cd2765252832facb9f6ec16b9"
 dependencies = [
  "revision",
  "storekey",
@@ -4497,9 +4471,9 @@ dependencies = [
 
 [[package]]
 name = "surrealdb-core"
-version = "3.1.5"
+version = "3.2.0-beta.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9780c2f3dd6a3cb1cce8ca7c866b5e82ac4377b826a09bf718ca441bfd2bd747"
+checksum = "029bf4d0514e5cf5622c5c09a36a4888c7ed0e98ace5d7d90482f4da4340d385"
 dependencies = [
  "addr",
  "ahash 0.8.12",
@@ -4549,7 +4523,6 @@ dependencies = [
  "phf 0.13.1",
  "pin-project-lite",
  "quick_cache",
- "radix_trie",
  "rand 0.9.4",
  "rand_core 0.6.4",
  "rayon",
@@ -4614,9 +4587,9 @@ dependencies = [
 
 [[package]]
 name = "surrealdb-strand"
-version = "3.1.5"
+version = "3.2.0-beta.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4af300a172983b23c05e692cacba462ca023e3e9404812b6783d09a8af487865"
+checksum = "e217f93d4ba3f781a2030bb2bad17ee2332c3abef8d641e63c88fc88d4f27e87"
 dependencies = [
  "revision",
  "serde",
@@ -4625,9 +4598,9 @@ dependencies = [
 
 [[package]]
 name = "surrealdb-types"
-version = "3.1.5"
+version = "3.2.0-beta.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "edd434d643c040c2872c9cfc88c90e9910e9a55456d2df7e68e92725225d3e20"
+checksum = "923d511f5eff57ddd454c9f88fffb7981b024a9667e574b784e7a50688bfb5ac"
 dependencies = [
  "anyhow",
  "async-channel",
@@ -4655,9 +4628,9 @@ dependencies = [
 
 [[package]]
 name = "surrealdb-types-derive"
-version = "3.1.5"
+version = "3.2.0-beta.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "16d385184f3b727c58c4d099a877a4c54ffe879dd190396cc80b1676146b8b2b"
+checksum = "4607fb08b3326de6a5056d1a1c1d81e312c7ff9f989db956fdda2775a2ea7837"
 dependencies = [
  "heck 0.4.1",
  "proc-macro2",

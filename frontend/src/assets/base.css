@@ -1,3 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@layer theme, base, primevue;
+
+@import "tailwindcss";
+@import "tailwindcss-primeui";
+
+/* Optional: If you want to use PrimeVue's design tokens as Tailwind variables */
+@theme {
+  --color-primary: var(--p-primary-color);
+  --color-primary-contrast: var(--p-primary-contrast-color);
+}
