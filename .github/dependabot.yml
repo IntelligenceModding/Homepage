@@ -1,18 +1,36 @@
 version: 2
 updates:
-  - package-ecosystem: "" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  # Rust Backend
+  - package-ecosystem: "cargo"
+    directory: "/"
     schedule:
-      interval: "weekly"
-    groups: # group minor and patches into one PR
-      patch-updates:
-        patterns:
-          - "*"
-        update-types:
-          - "patch"
-      
+      interval: "daily"
+    groups:
       minor-updates:
         patterns:
           - "*"
         update-types:
           - "minor"
+      patch-updates:
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+
+  # Vue / Bun Frontend
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "daily"
+    groups:
+      minor-updates:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+      patch-updates:
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+          
