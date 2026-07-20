@@ -1,36 +1,12 @@
 <script setup lang="ts">
 import {computed, ref, onMounted} from "vue";
 import {useRoute} from "vue-router";
-import {useUserStore} from "@/stores/user";
-import {logout} from "@/scripts/utils";
-import ColorSwitcher from "@/views/components/ColorSwitcher.vue";
 
 const route = useRoute();
-const userStore = useUserStore();
 
 const showLayout = computed(() => {
   return !route.meta.layout || route.meta.layout !== 'empty';
 });
-
-const userNav = ref([
-  {
-    label: userStore.user?.name,
-    items: [
-      {
-        label: 'Profile',
-        icon: 'pi pi-user-edit',
-        route: "/myprofile"
-      },
-      {
-        label: 'Log Out',
-        icon: 'pi pi-sign-out',
-        command: () => {
-          logout();
-        }
-      }
-    ]
-  }
-]);
 
 const headerNav = [
   {name: 'Projects', href: '/projects'},
@@ -100,7 +76,7 @@ onMounted(() => {
         class="relative flex flex-col w-full bg-[url('/background.webp')] bg-cover bg-center aspect-[1440/775] min-h-[400px] max-h-[85vh] z-20">
         <nav class="mx-auto flex w-full max-w-7xl items-center justify-between p-3 lg:px-8"
              aria-label="Global">
-          <div class="flex lg:flex-1">
+          <div class="flex items-center gap-2 lg:flex-1">
             <router-link to="/" class="-m-1 p-1">
               <span class="sr-only">Intelligence Modding</span>
               <img class="hover:shadow-lg hover:shadow-sky-700 bg-blend-multiply"
@@ -109,6 +85,9 @@ onMounted(() => {
                    width="64"
                    height="64"/>
             </router-link>
+            <p class="text-white text-xl font-bold tracking-tight drop-shadow-lg">
+              Intelligence
+            </p>
           </div>
 
           <div class="flex lg:hidden">
@@ -124,16 +103,6 @@ onMounted(() => {
               {{ item.name }}
             </router-link>
           </div>
-
-          <div class="hidden lg:flex lg:flex-1 lg:justify-end items-center">
-            <div class="px-3">
-              <ColorSwitcher/>
-            </div>
-            <router-link to="/login"
-                         class="text-sm font-semibold leading-6 text-white drop-shadow-md">
-              Log in <span aria-hidden="true">&rarr;</span>
-            </router-link>
-          </div>
         </nav>
 
         <div class="flex-grow flex items-center justify-center px-4 pb-12">
@@ -146,14 +115,14 @@ onMounted(() => {
           class="absolute bottom-0 inset-x-0 h-[3px] bg-linear-to-b from-0% to-surface-800"></div>
 
       </header>
-      <div class="flex-grow bg-surface-800">
+      <div class="flex-grow bg-surface-900">
         <router-view></router-view>
       </div>
-      <footer class="bg-surface-900 flex flex-col mt-auto w-full">
+      <footer class="bg-surface-800 flex flex-col mt-auto w-full">
 
         <div class="w-full overflow-hidden leading-none flex justify-center h-[76px]">
           <svg
-            class="text-surface-800 min-w-[2850px] h-[76px]"
+            class="text-surface-900 min-w-[2850px] h-[76px]"
             width="2850"
             height="76"
             viewBox="0 0 2850 76"
@@ -180,7 +149,14 @@ onMounted(() => {
           </div>
 
           <nav class="flex flex-col gap-y-3 text-sm font-medium">
-            <router-link v-for="item in footerNav.main" :to=item.href class="hover:text-surface-100 transition-colors">{{ item.name }}</router-link>
+            <router-link
+              v-for="item in footerNav.main"
+              :key="item.name"
+              :to="item.href"
+              class="hover:text-surface-100 transition-colors"
+            >
+              {{ item.name }}
+            </router-link>
           </nav>
 
         </div>

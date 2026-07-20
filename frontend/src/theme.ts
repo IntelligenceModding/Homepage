@@ -1,5 +1,5 @@
-import {definePreset} from "@primevue/themes";
-import Aura from "@primevue/themes/aura";
+import {definePreset} from "@primeuix/themes";
+import Aura from "@primeuix/themes/aura";
 
 export const IntelligencePreset = definePreset(Aura, {
   primitive: {
@@ -652,6 +652,26 @@ export const IntelligencePreset = definePreset(Aura, {
             color: "{surface.500}",
             focusColor: "{surface.400}",
             activeColor: "{surface.400}"
+          }
+        }
+      }
+    }
+  },
+  components: {
+    checkbox: {
+      colorScheme: {
+        light: {
+          root: {
+            background: "{surface.800}",
+            borderColor: "{surface.600}",
+            hoverBorderColor: "{surface.500}"
+          }
+        },
+        dark: {
+          root: {
+            background: "{surface.800}",
+            borderColor: "{surface.600}",
+            hoverBorderColor: "{surface.500}"
           }
         }
       }

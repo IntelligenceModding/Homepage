@@ -23,7 +23,7 @@ app.use(PrimeVue, {
   theme: {
     preset: IntelligencePreset,
     options: {
-      darkModeSelector: '.idark',
+      darkModeSelector: true,
     },
     },
 });
