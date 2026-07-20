@@ -6,15 +6,11 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      minor-updates:
+      minor-and-patch-updates:
         patterns:
           - "*"
         update-types:
           - "minor"
-      patch-updates:
-        patterns:
-          - "*"
-        update-types:
           - "patch"
 
   # Vue / Bun Frontend
@@ -23,14 +19,10 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      minor-updates:
+      minor-and-patch-updates:
         patterns:
           - "*"
         update-types:
           - "minor"
-      patch-updates:
-        patterns:
-          - "*"
-        update-types:
           - "patch"
           
