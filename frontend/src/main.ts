@@ -11,10 +11,10 @@ import {requestBackend} from "@/scripts/data";
 import {useUserStore} from "@/stores/user";
 import Login from "@/views/Login.vue";
 import {createPinia} from "pinia";
-import Users from "@/views/Users.vue";
-import MyProfile from "@/views/MyProfile.vue";
 import Homepage from "@/views/Homepage.vue";
 import {IntelligencePreset} from "@/theme";
+import Blog from "@/views/Blog.vue";
+import Team from "@/views/Team.vue";
 
 const pinia = createPinia()
 const app = createApp(App);
@@ -34,8 +34,8 @@ app.directive('styleclass', StyleClass);
 
 const routes = [
   {name: "Homepage", path: '/', component: Homepage},
-  {path: '/myprofile', component: MyProfile, meta: {needsAuth: true}},
-  {path: '/users', component: Users, meta: {needsAuth: true}},
+  {path: '/blog', component: Blog, meta: {needsAuth: false}},
+  {path: '/team', component: Team, meta: {needsAuth: false}},
   {
     name: "Login",
     path: '/login',

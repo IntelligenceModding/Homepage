@@ -9,10 +9,8 @@ const showLayout = computed(() => {
 });
 
 const headerNav = [
-  {name: 'Projects', href: '/projects'},
-  {name: 'Team', href: '/team'},
-  {name: 'Partners', href: '/partners'},
-  {name: 'Mom', href: '/test'},
+  {name: 'Blog', href: '/blog'},
+  {name: 'Team & Partners', href: '/team'},
 ]
 
 const footerNav = {
@@ -73,7 +71,7 @@ onMounted(() => {
   <div v-if="showLayout">
     <div class="flex flex-col min-h-screen">
       <header
-        class="relative flex flex-col w-full bg-[url('/background.webp')] bg-cover bg-center aspect-[1440/775] min-h-[400px] max-h-[85vh] z-20">
+        class="relative flex flex-col w-full bg-[url('/background.webp')] bg-cover bg-center aspect-1440/775 min-h-100 max-h-[85vh] z-20">
         <nav class="mx-auto flex w-full max-w-7xl items-center justify-between p-3 lg:px-8"
              aria-label="Global">
           <div class="flex items-center gap-2 lg:flex-1">
@@ -98,9 +96,21 @@ onMounted(() => {
           </div>
 
           <div class="hidden lg:flex lg:gap-x-12">
-            <router-link v-for="item in headerNav" :key="item.name" :to="item.href"
-                         class="text-sm hover:text-sky-400 font-semibold leading-6 text-white drop-shadow-md">
-              {{ item.name }}
+            <router-link
+              v-for="item in headerNav"
+              :key="item.name"
+              :to="item.href"
+              custom
+              v-slot="{ href, navigate, isActive }"
+            >
+              <a
+                :href="href"
+                @click="navigate"
+                class="text-sm font-semibold leading-6 drop-shadow-md transition-colors px-2.5 pt-1 pb-0.5"
+                :class="isActive ? 'rounded-4xl bg-violet-800 shadow-md shadow-violet-800' : 'text-white hover:text-surface-300'"
+              >
+                {{ item.name }}
+              </a>
             </router-link>
           </div>
         </nav>
@@ -112,14 +122,13 @@ onMounted(() => {
         </div>
 
         <div
-          class="absolute bottom-0 inset-x-0 h-[3px] bg-linear-to-b from-0% to-surface-800"></div>
+          class="absolute bottom-0 inset-x-0 h-[4px] bg-linear-to-b from-0% to-surface-900"></div>
 
       </header>
       <div class="flex-grow bg-surface-900">
         <router-view></router-view>
       </div>
       <footer class="bg-surface-800 flex flex-col mt-auto w-full">
-
         <div class="w-full overflow-hidden leading-none flex justify-center h-[76px]">
           <svg
             class="text-surface-900 min-w-[2850px] h-[76px]"
@@ -153,9 +162,17 @@ onMounted(() => {
               v-for="item in footerNav.main"
               :key="item.name"
               :to="item.href"
-              class="hover:text-surface-100 transition-colors"
+              custom
+              v-slot="{ href, navigate, isActive }"
             >
-              {{ item.name }}
+              <a
+                :href="href"
+                @click="navigate"
+                class="transition-colors"
+                :class="isActive ? 'text-surface-100' : 'hover:text-surface-100'"
+              >
+                {{ item.name }}
+              </a>
             </router-link>
           </nav>
 
