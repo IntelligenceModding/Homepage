@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@primeuix/themes": "^2.0.3",
-    "@primevue/auto-import-resolver": "^4.5.5",
+    "@primevue/auto-import-resolver": "^5.0.0",
     "@tailwindcss/vite": "^4.3.3",
     "pinia": "^3.0.4",
     "primeicons": "^8.0.0",
